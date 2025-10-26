@@ -1,0 +1,74 @@
+# Git 
+.git
+.gitignore
+.gitattributes
+
+# CI / Pipelines 
+.codeclimate.yml
+.travis.yml
+.taskcluster.yml
+
+# Python cache / bytecode 
+**/__pycache__/
+**/*.py[cod]
+*.pyo
+*.pyd
+
+# Build artifacts 
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller 
+*.manifest
+*.spec
+
+# Installer logs 
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage 
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+tests/
+
+# Translations 
+*.mo
+*.pot
+
+# Docs 
+docs/_build/
+
+# Virtual environments 
+.env
+.venv/
+venv/
+
+# IDEs / Editors 
+.idea/
+.vscode/
+.ropeproject
+**/.ropeproject
+**/*.swp
+
+# OS junk 
+*.DS_Store
+Thumbs.db
+
+# Ref: https://gist.github.com/04b4d7691f28e264f72e76cfd724d448.git
