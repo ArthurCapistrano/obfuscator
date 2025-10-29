@@ -21,6 +21,15 @@ class DatabaseConnection:
         )
 
     def connect(self, engine= None) -> Connection:
+        """Estabelece uma conexão com o banco de dados.
+
+        Args:
+            engine (Engine, optional): O mecanismo de banco de dados a ser usado. Padrão é None.
+
+        Returns:
+            Connection: A conexão com o banco de dados.
+        """   
+        
         if engine is None:
             engine = self.get_db_engine()
         return engine.connect()
