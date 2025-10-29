@@ -7,7 +7,19 @@ import os
 # Load environment variables 
 load_dotenv(".env")
 
-def setup_database(db_conn: DatabaseConnection):
+def setup_database(db_conn: DatabaseConnection) -> None:
+    """Configura o banco de dados de origem.
+
+    Args:
+        db_conn (DatabaseConnection): Conexão com o banco de dados.
+
+    Returns:
+        None
+
+    Raises:
+        Exception: Se ocorrer um erro durante a configuração do banco de dados.
+    """
+
     print(f"Verificando/Criando banco de dados: '{db_conn.db}'...")
     
     with db_conn.connect(engine= db_conn.get_server_engine()) as conn:
@@ -15,7 +27,16 @@ def setup_database(db_conn: DatabaseConnection):
     
     print(f"Banco de dados '{db_conn.db}' verificado/criado com sucesso.")
 
-def load_origin_data(db_conn: DatabaseConnection):
+def load_origin_data(db_conn: DatabaseConnection) -> None:
+    """Carrega os dados de origem no banco de dados.
+    Args:
+        db_conn (DatabaseConnection): Conexão com o banco de dados.
+    Returns:
+        None
+    Raises:
+        Exception: Se ocorrer um erro durante o carregamento dos dados.
+    """
+
     csv_path = "data/raw/recruitment_data.csv"
     
     try:
