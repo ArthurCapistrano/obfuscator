@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # Serviço 1: Banco de dados RAW (Origem)
+  mysql-raw-db:
+    image: mysql:8.0
+    container_name: mysql-raw-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${ORIGIN_DB_PASSWORD}
+      - MYSQL_DATABASE=${ORIGIN_DB_NAME}
+    ports:
+      - "${ORIGIN_DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  # Serviço 2: Banco de dados OBFUSCATED (Destino)
+  mysql-obfuscated-db:
+    image: mysql:8.0
+    container_name: mysql-obfuscated-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DESTINATION_DB_PASSWORD}
+      - MYSQL_DATABASE=${DESTINATION_DB_NAME}
+    ports:
+      - "${DESTINATION_DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  # Serviço 3: Airflow
+  airflow:
+    image: apache/airflow:2.8.1
+    container_name: airflow
+    depends_on:
+      mysql-raw-db:
+        condition: service_healthy
+      mysql-obfuscated-db:
+        condition: service_healthy
+
+    env_file:
+      - .env
+
+    environment:
+      # Alterando os nomes dos bancos para o mesmo que os serviços
+      - ORIGIN_DB_HOST=mysql-raw-db
+      - DESTINATION_DB_HOST=mysql-obfuscated-db
+      - ORIGIN_DB_PORT=3306
+      - DESTINATION_DB_PORT=3306
+
+    ports:
+      - "8080:8080"  
+
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+      - ./requirements.txt:/opt/airflow/requirements.txt
+      - ./airflow-data:/opt/airflow
+
+    entrypoint: "sleep"
+    command: "infinity"

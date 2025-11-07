@@ -1,0 +1,20 @@
+{
+  "Applicant ID": "sha256",
+  "Application Date": "preserve",
+  "First Name": "first_name",
+  "Last Name": "last_name",
+  "Gender": "preserve",
+  "Date of Birth": "date_of_birth",
+  "Phone Number": "phone_number",
+  "Email": "email_from_name",
+  "Address": "street_address",
+  "City": "city",
+  "State": "state_abbr",
+  "Zip Code": "zipcode",
+  "Country": "country",
+  "Education Level": "preserve",
+  "Years of Experience": "preserve",
+  "Desired Salary": "preserve",
+  "Job Title": "job",
+  "Status": "preserve"
+}

@@ -1,43 +1,20 @@
 import pandas as pd
-from dotenv import load_dotenv
 from database.connection import DatabaseConnection
-from sqlalchemy.sql import text 
-import os
-
-# Load environment variables 
-load_dotenv(".env")
-
-def setup_database(db_conn: DatabaseConnection) -> None:
-    """Configura o banco de dados de origem.
-
-    Args:
-        db_conn (DatabaseConnection): Conexão com o banco de dados.
-
-    Returns:
-        None
-
-    Raises:
-        Exception: Se ocorrer um erro durante a configuração do banco de dados.
-    """
-
-    print(f"Verificando/Criando banco de dados: '{db_conn.db}'...")
-    
-    with db_conn.connect(engine= db_conn.get_server_engine()) as conn:
-        conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {db_conn.db};"))
-    
-    print(f"Banco de dados '{db_conn.db}' verificado/criado com sucesso.")
+from database.utils import setup_database
 
 def load_origin_data(db_conn: DatabaseConnection) -> None:
     """Carrega os dados de origem no banco de dados.
     Args:
         db_conn (DatabaseConnection): Conexão com o banco de dados.
+    
     Returns:
         None
+
     Raises:
         Exception: Se ocorrer um erro durante o carregamento dos dados.
     """
 
-    csv_path = "data/raw/recruitment_data.csv"
+    csv_path = "/opt/airflow/data/raw/recruitment_data.csv" 
     
     try:
         df = pd.read_csv(csv_path)

@@ -1,7 +1,10 @@
 import os
 
-from sqlalchemy import create_engine, Connection
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Connection
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class DatabaseConnection:
     def __init__(self, prefix: str):
@@ -29,7 +32,7 @@ class DatabaseConnection:
         Returns:
             Connection: A conexão com o banco de dados.
         """   
-        
+
         if engine is None:
             engine = self.get_db_engine()
         return engine.connect()
